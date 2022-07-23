@@ -47,6 +47,9 @@ namespace CarWashApi
             services.AddTransient<IAddress, AddressRepo>();
             services.AddTransient<AddressService, AddressService>();
 
+            services.AddTransient<IPackage, PackageRepo>();
+            services.AddTransient<PackageService, PackageService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

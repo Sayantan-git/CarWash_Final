@@ -11,5 +11,7 @@ namespace CarWashApi.Models
         public CarWashContext(DbContextOptions options) : base(options) { }
         public DbSet<UserDetails> Users { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<Package> Package { get; set; }
+
     }
 }

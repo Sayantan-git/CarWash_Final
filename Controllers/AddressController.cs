@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
 namespace CarWashApi.Controllers
 {
     [Route("api/[controller]")]
@@ -23,22 +25,30 @@ namespace CarWashApi.Controllers
         {
             return Ok(_address.GetAll());
         }
+
+
         [HttpGet("ById")]
         public IActionResult GetAddressById(int id)
         {
             return Ok(_address.GetById(id));
         }
+
+
         [HttpPost]
         public IActionResult AddAddress(Address address)
         {
             return Ok(_address.AddAddress(address));
         }
+
+
         [HttpPut]
         public IActionResult UpdateAddress(Address address)
         {
             return Ok(_address.UpdateAddress(address));
 
         }
+
+
         [HttpDelete("ById")]
         public IActionResult RemoveAddress(int id)
         {
