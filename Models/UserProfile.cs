@@ -17,7 +17,7 @@ namespace CarWashApi.Models
         public string UserPhnumber { get; set; } = null!;
         public string UserEmail { get; set; } = null!;
         public string UserPassword { get; set; } = null!;
-
         public string UserStatus { get; set; } = null;
+        public string Role { get; set; } = null;
     }
 }

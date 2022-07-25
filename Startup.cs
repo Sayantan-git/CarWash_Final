@@ -44,6 +44,13 @@ namespace CarWashApi
             services.AddScoped<IRepository<UserProfile, int>, UserProfileRepository>();
             services.AddScoped<UserProfileService, UserProfileService>();
 
+
+            services.AddScoped<IViewInvoiceRepository, ViewInvoiceRepository>();
+            services.AddScoped<ViewInvoiceService, ViewInvoiceService>();
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
