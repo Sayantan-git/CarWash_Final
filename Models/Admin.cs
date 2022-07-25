@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,12 +7,8 @@ namespace CarWashApi.Models
 {
     public class Admin
     {
-        [Key]
-        [DataType("int")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int AdminId { get; set; }
+        public string AdminUsername { get; set; } = null!;
+        public string AdminPassword { get; set; } = null!;
     }
 }

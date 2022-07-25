@@ -3,26 +3,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarWashApi.Migrations
 {
-    public partial class initial : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Admin",
+                name: "Admins",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    AdminId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AdminUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminPassword = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Admin", x => x.Id);
+                    table.PrimaryKey("PK_Admins", x => x.AdminId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarInfo",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,11 +33,11 @@ namespace CarWashApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarInfo", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Package",
+                name: "Packages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,29 +49,29 @@ namespace CarWashApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Package", x => x.Id);
+                    table.PrimaryKey("PK_Packages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UserProfiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CnfPassword = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserPhnumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UserProfiles", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "washers",
+                name: "Washers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,21 +80,20 @@ namespace CarWashApi.Migrations
                     Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NoOfWashes = table.Column<int>(type: "int", nullable: false),
-                    IsApproved = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NoOfWashes = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_washers", x => x.Id);
+                    table.PrimaryKey("PK_Washers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
+                name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -103,12 +102,12 @@ namespace CarWashApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Address_Users_CustId",
+                        name: "FK_Addresses_UserProfiles_CustId",
                         column: x => x.CustId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -134,40 +133,40 @@ namespace CarWashApi.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Address_AddressId",
+                        name: "FK_Orders_Addresses_AddressId",
                         column: x => x.AddressId,
-                        principalTable: "Address",
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_CarInfo_CarId",
+                        name: "FK_Orders_Cars_CarId",
                         column: x => x.CarId,
-                        principalTable: "CarInfo",
+                        principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_Package_PackageId",
+                        name: "FK_Orders_Packages_PackageId",
                         column: x => x.PackageId,
-                        principalTable: "Package",
+                        principalTable: "Packages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_CustId",
+                        name: "FK_Orders_UserProfiles_CustId",
                         column: x => x.CustId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Orders_washers_WasherId",
+                        name: "FK_Orders_Washers_WasherId",
                         column: x => x.WasherId,
-                        principalTable: "washers",
+                        principalTable: "Washers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_CustId",
-                table: "Address",
+                name: "IX_Addresses_CustId",
+                table: "Addresses",
                 column: "CustId");
 
             migrationBuilder.CreateIndex(
@@ -199,25 +198,25 @@ namespace CarWashApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Admin");
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "CarInfo");
+                name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Package");
+                name: "Packages");
 
             migrationBuilder.DropTable(
-                name: "washers");
+                name: "Washers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserProfiles");
         }
     }
 }

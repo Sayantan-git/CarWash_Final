@@ -8,14 +8,26 @@ namespace CarWashApi.Models
 {
     public class CarWashContext :DbContext
     {
-        public CarWashContext(DbContextOptions options) : base(options) { }
-        public DbSet<UserDetails> Users { get; set; }
-        public DbSet<Address> Address { get; set; }
-        public DbSet<Package> Package { get; set; }
-        public DbSet<Orders> Orders { get; set; }
+        public CarWashContext()
+        {
+        }
 
-        public DbSet<Admin> Admin { get; set; }
-        public DbSet<CarInfo> CarInfo { get; set; }
-        public DbSet<WasherDetails> washers { get; set; }
+        public CarWashContext(DbContextOptions<CarWashContext> options)
+            : base(options)
+        {
+        }
+
+
+        public virtual DbSet<UserProfile> UserProfiles { get; set; } = null!;
+        public virtual DbSet<Admin> Admins { get; set; } = null!;
+
+        public virtual DbSet<CarInfo> Cars{ get; set; } = null!;
+        public virtual DbSet<Washer> Washers { get; set; } = null!;
+
+        public virtual DbSet<Order> Orders { get; set; } = null!;
+
+        public virtual DbSet<Address> Addresses { get; set; } = null!;
+
+        public virtual DbSet<Package> Packages { get; set; } = null!;
     }
 }

@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Models
 {
-    public class Address
+    public class Invoice
     {
         [Key]
-        [DataType("int")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        public string HouseNumber { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Pincode { get; set; }
-        public string Country { get; set; }
+        public int InvoiceId { get; set; }
 
         public int CustId { get; set; }
         [ForeignKey("CustId")]
         public UserProfile UserProfile { get; set; }
+        public DateTime DateTime { get; set; }
+        public double OrderTotal { get; set; }
+        public string PaymentStatus { get; set; }
+        public string PackageName { get; set; }
+        public string CarName { get; set; }
+        public string WasherName { get; set; }
     }
 }

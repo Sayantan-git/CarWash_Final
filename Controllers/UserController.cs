@@ -1,5 +1,4 @@
 ﻿using CarWashApi.Models;
-using CarWashApi.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,35 +12,22 @@ namespace CarWashApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private UserService _user;
-        public UserController(UserService user)
+        private readonly CarWashContext _context;
+        public UserController(CarWashContext context)
         {
-            _user = user;
+            _context = context;
+
         }
-        [HttpGet]
-        public IActionResult GetAllUsers()
+        [HttpPut("{id}")]
+        public IActionResult ChangeUserStatus(int id, string UserStatus)
         {
-            return Ok(_user.GetAll());
-        }
-        [HttpGet("ById")]
-        public IActionResult GetUserById(int id)
-        {
-            return Ok(_user.GetById(id));
-        }
-        [HttpPost]
-        public IActionResult AddUser(UserDetails user)
-        {
-            return Ok(_user.AddUser(user));
-        }
-        [HttpPut]
-        public IActionResult UpdateUser(UserDetails user)
-        {
-            return Ok(_user.UpdateUser(user));
-        }
-        [HttpDelete("ById")]
-        public IActionResult RemoveUser(int id)
-        {
-            return Ok(_user.RemoveUser(id));
+            (from p in _context.UserProfiles
+             where p.UserId == id
+             select p).ToList()
+                    .ForEach(x => x.UserStatus = UserStatus);
+
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

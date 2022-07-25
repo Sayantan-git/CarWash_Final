@@ -9,7 +9,6 @@ namespace CarWashApi.Models
 {
     public class CarInfo
     {
-
         [Key]
         [DataType("int")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,6 +16,5 @@ namespace CarWashApi.Models
         public string Name { get; set; }
         public string Model { get; set; }
         public string Status { get; set; }
-
     }
 }

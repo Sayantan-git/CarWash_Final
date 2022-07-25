@@ -11,55 +11,57 @@ namespace CarWashApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class CarsController : ControllerBase
     {
         private readonly CarWashContext _context;
 
-        public OrdersController(CarWashContext context)
+        public CarsController(CarWashContext context)
         {
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/Cars
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<CarInfo>>> GetCar()
         {
-            if (_context.Orders == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            return await _context.Orders.ToListAsync();
+            return await _context.Cars.ToListAsync();
         }
 
-        // GET: api/Orders/5
+
+
+        // GET: api/Admins/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<CarInfo>> GetCar(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var car = await _context.Cars.FindAsync(id);
 
-            if (order == null)
+            if (car == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return car;
         }
 
-        // PUT: api/Order/5
+        // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutCar(int id, CarInfo car)
         {
-            if (id != order.Id)
+            if (id != car.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(car).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +69,7 @@ namespace CarWashApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!CarExists(id))
                 {
                     return NotFound();
                 }
@@ -80,45 +82,47 @@ namespace CarWashApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+
+
+
+        // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Admin>> PostOrder(Order order)
+        public async Task<ActionResult<CarInfo>> PostCar(CarInfo car)
         {
-            if (_context.Orders == null)
+            if (_context.Cars == null)
             {
-                return Problem("Entity set 'CropDealContext.Orders'  is null.");
+                return Problem("Entity set 'CropDealContext.Cars'  is null.");
             }
-            _context.Orders.Add(order);
+            _context.Cars.Add(car);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetCar", new { id = car.Id }, car);
         }
 
-        // DELETE: api/Order/5
+        // DELETE: api/Cars/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteCar(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Cars == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var car = await _context.Cars.FindAsync(id);
+            if (car == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(order);
+            _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderExists(int id)
+        private bool CarExists(int id)
         {
-            return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Cars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
-

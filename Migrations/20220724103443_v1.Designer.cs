@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarWashApi.Migrations
 {
     [DbContext(typeof(CarWashContext))]
-    [Migration("20220723111136_initial")]
-    partial class initial
+    [Migration("20220724103443_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,39 +37,38 @@ namespace CarWashApi.Migrations
                     b.Property<int>("CustId")
                         .HasColumnType("int");
 
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Pincode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CarWashApi.Models.Admin", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AdminId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email")
+                    b.Property<string>("AdminPassword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("AdminUsername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AdminId");
 
-                    b.ToTable("Admin");
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("CarWashApi.Models.CarInfo", b =>
@@ -90,10 +89,10 @@ namespace CarWashApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarInfo");
+                    b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("CarWashApi.Models.Orders", b =>
+            modelBuilder.Entity("CarWashApi.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,43 +168,40 @@ namespace CarWashApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Package");
+                    b.ToTable("Packages");
                 });
 
-            modelBuilder.Entity("CarWashApi.Models.UserDetails", b =>
+            modelBuilder.Entity("CarWashApi.Models.UserProfile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CnfPassword")
+                    b.Property<string>("UserAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
+                    b.Property<string>("UserPassword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mobile")
-                        .IsRequired()
+                    b.Property<string>("UserPhnumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("UserStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserProfiles");
                 });
 
-            modelBuilder.Entity("CarWashApi.Models.WasherDetails", b =>
+            modelBuilder.Entity("CarWashApi.Models.Washer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,9 +209,6 @@ namespace CarWashApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IsApproved")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile")
@@ -232,21 +225,21 @@ namespace CarWashApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("washers");
+                    b.ToTable("Washers");
                 });
 
             modelBuilder.Entity("CarWashApi.Models.Address", b =>
                 {
-                    b.HasOne("CarWashApi.Models.UserDetails", "UserDetails")
+                    b.HasOne("CarWashApi.Models.UserProfile", "UserProfile")
                         .WithMany()
                         .HasForeignKey("CustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UserDetails");
+                    b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("CarWashApi.Models.Orders", b =>
+            modelBuilder.Entity("CarWashApi.Models.Order", b =>
                 {
                     b.HasOne("CarWashApi.Models.Address", "Address")
                         .WithMany()
@@ -256,7 +249,7 @@ namespace CarWashApi.Migrations
                         .WithMany()
                         .HasForeignKey("CarId");
 
-                    b.HasOne("CarWashApi.Models.UserDetails", "UserDetails")
+                    b.HasOne("CarWashApi.Models.UserProfile", "UserProfile")
                         .WithMany()
                         .HasForeignKey("CustId");
 
@@ -264,7 +257,7 @@ namespace CarWashApi.Migrations
                         .WithMany()
                         .HasForeignKey("PackageId");
 
-                    b.HasOne("CarWashApi.Models.WasherDetails", "WasherDetails")
+                    b.HasOne("CarWashApi.Models.Washer", "Washer")
                         .WithMany()
                         .HasForeignKey("WasherId");
 
@@ -274,9 +267,9 @@ namespace CarWashApi.Migrations
 
                     b.Navigation("Package");
 
-                    b.Navigation("UserDetails");
+                    b.Navigation("UserProfile");
 
-                    b.Navigation("WasherDetails");
+                    b.Navigation("Washer");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,55 +11,55 @@ namespace CarWashApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class PackagesController : ControllerBase
     {
         private readonly CarWashContext _context;
 
-        public OrdersController(CarWashContext context)
+        public PackagesController(CarWashContext context)
         {
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/Packages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<Package>>> GetAdmins()
         {
-            if (_context.Orders == null)
+            if (_context.Packages== null)
             {
                 return NotFound();
             }
-            return await _context.Orders.ToListAsync();
+            return await _context.Packages.ToListAsync();
         }
 
-        // GET: api/Orders/5
+        // GET: api/Packages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<Package>> GetPackage(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Packages == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var admin = await _context.Packages.FindAsync(id);
 
-            if (order == null)
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return admin;
         }
 
-        // PUT: api/Order/5
+        // PUT: api/Packages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutPackage(int id, Package package)
         {
-            if (id != order.Id)
+            if (id != package.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(package).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace CarWashApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!PackageExists(id))
                 {
                     return NotFound();
                 }
@@ -80,45 +80,44 @@ namespace CarWashApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Admin>> PostOrder(Order order)
+        public async Task<ActionResult<Package>> PostPackage(Package package)
         {
-            if (_context.Orders == null)
+            if (_context.Packages == null)
             {
-                return Problem("Entity set 'CropDealContext.Orders'  is null.");
+                return Problem("Entity set 'CropDealContext.Admins'  is null.");
             }
-            _context.Orders.Add(order);
+            _context.Packages.Add(package);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetPackage", new { id = package.Id }, package);
         }
 
-        // DELETE: api/Order/5
+        // DELETE: api/Packages/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeletePackage(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Packages == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var package = await _context.Packages.FindAsync(id);
+            if (package == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(order);
+            _context.Packages.Remove(package);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderExists(int id)
+        private bool PackageExists(int id)
         {
-            return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Packages?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
-

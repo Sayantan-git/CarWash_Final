@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Models
 {
-    public class WasherDetails
+    public class Washer
     {
         [Key]
         [DataType("int")]
@@ -18,6 +18,5 @@ namespace CarWashApi.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public int NoOfWashes { get; set; }
-        public string IsApproved { get; set; }
     }
 }

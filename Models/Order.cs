@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Models
 {
-    public class Orders
+    public class Order
     {
         [Key]
         [DataType("int")]
@@ -24,7 +24,7 @@ namespace CarWashApi.Models
 
         public int? CustId { get; set; }
         [ForeignKey("CustId")]
-        public UserDetails UserDetails { get; set; }
+        public UserProfile UserProfile { get; set; }
 
         public int? AddressId { get; set; }
         [ForeignKey("AddressId")]
@@ -33,7 +33,7 @@ namespace CarWashApi.Models
 
         public int? PackageId { get; set; }
         [ForeignKey("PackageId")]
-        public Package Package{ get; set; }
+        public Package Package { get; set; }
 
         public int? CarId { get; set; }
         [ForeignKey("CarId")]
@@ -42,10 +42,7 @@ namespace CarWashApi.Models
 
         public int? WasherId { get; set; }
         [ForeignKey("WasherId")]
-        public WasherDetails WasherDetails { get; set; }
-
-
-
+        public Washer Washer{ get; set; }
 
     }
 }

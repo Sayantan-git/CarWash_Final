@@ -1,5 +1,5 @@
 using CarWashApi.Models;
-using CarWashApi.Repositories;
+using CarWashApi.Repository;
 using CarWashApi.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,27 +41,8 @@ namespace CarWashApi
 
 
 
-            services.AddTransient<IUser, UserRepo>();
-            services.AddTransient<UserService, UserService>();
-
-            services.AddTransient<IAddress, AddressRepo>();
-            services.AddTransient<AddressService, AddressService>();
-
-            services.AddTransient<IPackage, PackageRepo>();
-            services.AddTransient<PackageService, PackageService>();
-
-
-            services.AddTransient<IOrders, OrdersRepo>();
-            services.AddTransient<OrdersService, OrdersService>();
-
-            services.AddTransient<IAdmin, AdminRepo>();
-            services.AddTransient<AdminService, AdminService>();
-
-            services.AddTransient<ICarInfo, CarInfoRepo>();
-            services.AddTransient<CarInfoService, CarInfoService>();
-
-            services.AddTransient<IWasherDetails, WasherDetailsRepo>();
-            services.AddTransient<WasherInfoService, WasherInfoService>();
+            services.AddScoped<IRepository<UserProfile, int>, UserProfileRepository>();
+            services.AddScoped<UserProfileService, UserProfileService>();
 
         }
 

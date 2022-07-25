@@ -11,55 +11,55 @@ namespace CarWashApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class AdminsController : ControllerBase
     {
         private readonly CarWashContext _context;
 
-        public OrdersController(CarWashContext context)
+        public AdminsController(CarWashContext context)
         {
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/Admins
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
-            if (_context.Orders == null)
+            if (_context.Admins == null)
             {
                 return NotFound();
             }
-            return await _context.Orders.ToListAsync();
+            return await _context.Admins.ToListAsync();
         }
 
-        // GET: api/Orders/5
+        // GET: api/Admins/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Admins == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var admin = await _context.Admins.FindAsync(id);
 
-            if (order == null)
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return admin;
         }
 
-        // PUT: api/Order/5
+        // PUT: api/Admins/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutAdmin(int id, Admin admin)
         {
-            if (id != order.Id)
+            if (id != admin.AdminId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(admin).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace CarWashApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!AdminExists(id))
                 {
                     return NotFound();
                 }
@@ -80,45 +80,44 @@ namespace CarWashApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Admin>> PostOrder(Order order)
+        public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
         {
-            if (_context.Orders == null)
+            if (_context.Admins == null)
             {
-                return Problem("Entity set 'CropDealContext.Orders'  is null.");
+                return Problem("Entity set 'CropDealContext.Admins'  is null.");
             }
-            _context.Orders.Add(order);
+            _context.Admins.Add(admin);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetAdmin", new { id = admin.AdminId }, admin);
         }
 
-        // DELETE: api/Order/5
+        // DELETE: api/Admins/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteAdmin(int id)
         {
-            if (_context.Orders == null)
+            if (_context.Admins == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var admin = await _context.Admins.FindAsync(id);
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(order);
+            _context.Admins.Remove(admin);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderExists(int id)
+        private bool AdminExists(int id)
         {
-            return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Admins?.Any(e => e.AdminId == id)).GetValueOrDefault();
         }
     }
 }
-

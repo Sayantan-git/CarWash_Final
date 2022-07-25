@@ -9,7 +9,6 @@ namespace CarWashApi.Models
 {
     public class Package
     {
-
         [Key]
         [DataType("int")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
