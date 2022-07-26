@@ -1,4 +1,6 @@
-﻿using CarWashApi.Models;
+﻿using AutoMapper;
+using CarWashApi.DTOs;
+using CarWashApi.Models;
 using CarWashApi.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +17,14 @@ namespace CarWashApi.Controllers
 
     {
         private readonly UserProfileService _Service;
+        private readonly IMapper mapper;
+        private readonly RegisterService _RegisterService;
 
-        public UserProfilesController(UserProfileService service)
+        public UserProfilesController(IMapper mapper, UserProfileService service, RegisterService registerService)
         {
             _Service = service;
+            _RegisterService = registerService;
+            this.mapper = mapper;
         }
 
 
@@ -136,23 +142,28 @@ namespace CarWashApi.Controllers
         /// <returns></returns>
 
         // POST: api/UserProfiles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserProfile>> PostUserProfile(UserProfile profile)
+        public async Task<ActionResult<UserProfile>> PostUserProfile(CreateUserDto profileDto)
         {
             try
             {
+                if (UserProfileExists(profileDto))
+                {
+                    return BadRequest("User Already Exists");
+
+                }
+
                 if (_Service == null)
                 {
-                    return Problem("Entity set 'CropDealContext.UserProfiles'  is null.");
+                    return Problem("Entity set 'CarWashContext.UserProfiles'  is null.");
                 }
-                var res = _Service.CreateUser(profile);
+                var res = await _RegisterService.RegisterUser(profileDto);
                 if (res == null)
                 {
                     return BadRequest();
                 }
 
-                return CreatedAtAction("GetUserProfile", new { id = profile.UserId }, profile);
+                return Ok(res);
             }
             catch (Exception ex)
             {
@@ -209,11 +220,11 @@ namespace CarWashApi.Controllers
         /// </summary>
         /// <returns></returns>
 
-        private bool UserProfileExists(int id)
+        private bool UserProfileExists(CreateUserDto email)
         {
             try
             {
-                return _Service.UserExists(id);
+                return _RegisterService.UserExisits(email);
             }
             catch (Exception ex)
             {

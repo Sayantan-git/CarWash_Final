@@ -13,12 +13,10 @@ namespace CarWashApi.Repository
         public List<Invoice> ViewInvoiceAsync(int id)
         {
             try
-            {
+            { 
                 var query = (from a in _context.Orders
                              join b in _context.UserProfiles
                                  on a.CustId equals b.UserId
-                             join c in _context.Washers
-                                on a.WasherId equals c.Id
                              join d in _context.Cars
                                 on a.CarId equals d.Id
                              join e in _context.Packages
@@ -30,7 +28,6 @@ namespace CarWashApi.Repository
                                  DateTime = a.DateTime,
                                  PaymentStatus = a.PaymentStatus,
                                  OrderTotal = a.TotalCost,
-                                 WasherName = c.Name,
                                  CarName = d.Name,
                                  PackageName = e.Name
                              });

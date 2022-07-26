@@ -44,6 +44,7 @@ namespace CarWashApi.Service
             return _repository.DeleteAsync(userProfile);
         }
     }
+    
 
 
 }

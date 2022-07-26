@@ -22,7 +22,6 @@ namespace CarWashApi.Models
         public virtual DbSet<Admin> Admins { get; set; } = null!;
 
         public virtual DbSet<CarInfo> Cars{ get; set; } = null!;
-        public virtual DbSet<Washer> Washers { get; set; } = null!;
 
         public virtual DbSet<Order> Orders { get; set; } = null!;
 

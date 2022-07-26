@@ -1,4 +1,5 @@
 ﻿using CarWashApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Packages
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Package>>> GetAdmins()
         {
@@ -32,6 +34,7 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Packages/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Package>> GetPackage(int id)
         {
@@ -51,6 +54,7 @@ namespace CarWashApi.Controllers
 
         // PUT: api/Packages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPackage(int id, Package package)
         {
@@ -82,12 +86,13 @@ namespace CarWashApi.Controllers
 
         // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Package>> PostPackage(Package package)
         {
             if (_context.Packages == null)
             {
-                return Problem("Entity set 'CropDealContext.Admins'  is null.");
+                return Problem("Entity set 'CarWashContext.Admins'  is null.");
             }
             _context.Packages.Add(package);
             await _context.SaveChangesAsync();
@@ -96,6 +101,7 @@ namespace CarWashApi.Controllers
         }
 
         // DELETE: api/Packages/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePackage(int id)
         {

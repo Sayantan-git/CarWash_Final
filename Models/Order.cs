@@ -40,9 +40,7 @@ namespace CarWashApi.Models
         public CarInfo CarInfo { get; set; }
 
 
-        public int? WasherId { get; set; }
-        [ForeignKey("WasherId")]
-        public Washer Washer{ get; set; }
+
 
     }
 }

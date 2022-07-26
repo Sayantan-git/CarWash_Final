@@ -1,6 +1,9 @@
+using CarWashApi.Configurations;
+using CarWashApi.DTOs;
 using CarWashApi.Models;
 using CarWashApi.Repository;
 using CarWashApi.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +12,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CarWashApi
@@ -31,9 +37,17 @@ namespace CarWashApi
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddAutoMapper(typeof(MapperConfig));
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarWashApi", Version = "v1" });
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme(\"bearer {token}\")",
+                    In = ParameterLocation.Header,
+                    Name = "authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             services.AddDbContext<CarWashContext>
@@ -48,6 +62,32 @@ namespace CarWashApi
             services.AddScoped<IViewInvoiceRepository, ViewInvoiceRepository>();
             services.AddScoped<ViewInvoiceService, ViewInvoiceService>();
 
+            services.AddScoped<ILoginRepository<Login, int>, LoginRepository>();
+            services.AddScoped<LoginService, LoginService>();
+
+
+            services.AddScoped<IRegisterRepository<CreateUserDto, UserProfile>, RegisterRepository>();
+            services.AddScoped<RegisterService, RegisterService>();
+
+            services.AddScoped<IToken, TokenRepository>();
+
+
+
+
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+          .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+    });
 
 
 
@@ -64,6 +104,8 @@ namespace CarWashApi
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

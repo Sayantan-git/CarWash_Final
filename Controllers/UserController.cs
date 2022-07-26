@@ -1,4 +1,5 @@
 ﻿using CarWashApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,6 +19,9 @@ namespace CarWashApi.Controllers
             _context = context;
 
         }
+
+
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult ChangeUserStatus(int id, string UserStatus)
         {

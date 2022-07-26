@@ -80,6 +80,7 @@ namespace CarWashApi.Controllers
             return NoContent();
         }
 
+
         // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -87,7 +88,7 @@ namespace CarWashApi.Controllers
         {
             if (_context.Admins == null)
             {
-                return Problem("Entity set 'CropDealContext.Admins'  is null.");
+                return Problem("Entity set 'CarWashContext.Admins'  is null.");
             }
             _context.Admins.Add(admin);
             await _context.SaveChangesAsync();

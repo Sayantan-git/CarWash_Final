@@ -1,4 +1,5 @@
 ﻿using CarWashApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Orders
+        [Authorize(Roles = "Washer")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
         {
