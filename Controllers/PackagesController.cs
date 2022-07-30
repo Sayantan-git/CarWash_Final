@@ -22,9 +22,9 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Packages
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Package>>> GetAdmins()
+        public async Task<ActionResult<IEnumerable<Package>>> GetPackages()
         {
             if (_context.Packages== null)
             {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserProfilesController : ControllerBase
 
@@ -141,8 +141,8 @@ namespace CarWashApi.Controllers
         /// </summary>
         /// <returns></returns>
 
-        // POST: api/UserProfiles
-        [HttpPost]
+        // POST: api/users/
+        [HttpPost, Route("signup")]
         public async Task<ActionResult<UserProfile>> PostUserProfile(CreateUserDto profileDto)
         {
             try

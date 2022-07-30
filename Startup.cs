@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 namespace CarWashApi
 {
@@ -33,8 +34,37 @@ namespace CarWashApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
+            //var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins,
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("https://localhost4200",
+            //                "https://localhost3000")
+            //            .AllowCredentials()
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod()
+            //            .WithExposedHeaders();
+            //        });
+            //});
+            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .WithExposedHeaders()
+                                            .AllowCredentials();
+
+                    });
+            });
 
             services.AddControllers();
             services.AddAutoMapper(typeof(MapperConfig));
@@ -82,10 +112,10 @@ namespace CarWashApi
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
         };
     });
 
@@ -105,8 +135,24 @@ namespace CarWashApi
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            //app.UseCors(x => x
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .SetIsOriginAllowed(origin => true) // allow any origin
+            //    .AllowCredentials()); // allow credentials
 
+            app.UseCors(
+                x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            );
+
+            app.UseHttpsRedirection();
+
+
+            app.UseAuthentication();
+        
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
