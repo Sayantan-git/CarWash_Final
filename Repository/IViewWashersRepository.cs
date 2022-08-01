@@ -8,6 +8,6 @@ namespace CarWashApi.Repository
 {
     public interface IViewWashersRepository
     {
-        //List<WashersDetails> ViewWashersAsync();
+        List<Washer> ViewWashersAsync();
     }
 }
