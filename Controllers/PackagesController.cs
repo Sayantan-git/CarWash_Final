@@ -22,7 +22,7 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Packages
-        //[Authorize(Roles = "Admin")]
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Package>>> GetPackages()
         {
@@ -54,7 +54,7 @@ namespace CarWashApi.Controllers
 
         // PUT: api/Packages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPackage(int id, Package package)
         {
@@ -86,7 +86,7 @@ namespace CarWashApi.Controllers
 
         // POST: api/Admins
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Package>> PostPackage(Package package)
         {
@@ -101,7 +101,7 @@ namespace CarWashApi.Controllers
         }
 
         // DELETE: api/Packages/5
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePackage(int id)
         {

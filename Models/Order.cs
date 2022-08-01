@@ -23,6 +23,7 @@ namespace CarWashApi.Models
 
 
         public int? CustId { get; set; }
+
         [ForeignKey("CustId")]
         public UserProfile UserProfile { get; set; }
 
@@ -38,9 +39,5 @@ namespace CarWashApi.Models
         public int? CarId { get; set; }
         [ForeignKey("CarId")]
         public CarInfo CarInfo { get; set; }
-
-
-
-
     }
 }

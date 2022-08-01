@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Controllers
 {
-    [Route("api/auth")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -24,22 +24,26 @@ namespace CarWashApi.Controllers
             _token = token;
         }
 
-        [HttpPost, Route("login")]
-
+        [HttpPost("login")]
         public async Task<ActionResult<Token>> Login(Login item)
         {
 
 
             var res = await _Service.Login(item);
+            int res1 = await _Service.GetUserId(item.Email);
 
 
             if (res == 200)
             {
 
                 string token = _token.CreateToken(item);
+
                 Token tk = new Token();
                 tk.token = token;
+                tk.UserId = res1;
                 return tk;
+
+
             }
             else if (res == 404)
             {

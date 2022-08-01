@@ -57,12 +57,11 @@ namespace CarWashApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", "http://localhost:4200")
+                        builder.WithOrigins("http://localhost:4200", "http://localhost:51350")
                                             .AllowAnyHeader()
                                             .AllowAnyMethod()
                                             .WithExposedHeaders()
                                             .AllowCredentials();
-
                     });
             });
 
@@ -112,8 +111,8 @@ namespace CarWashApi
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
         };
@@ -135,18 +134,17 @@ namespace CarWashApi
 
             app.UseRouting();
 
-            //app.UseCors(x => x
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader()
-            //    .SetIsOriginAllowed(origin => true) // allow any origin
-            //    .AllowCredentials()); // allow credentials
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
 
-            app.UseCors(
-                x => x
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            );
+            //app.UseCors(x=>x
+            //.AllowAnyHeader()
+            //.AllowAnyMethod()
+            //.AllowCredentials()
+            //);
 
             app.UseHttpsRedirection();
 

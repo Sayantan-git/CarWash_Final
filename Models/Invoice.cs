@@ -19,6 +19,5 @@ namespace CarWashApi.Models
         public string PaymentStatus { get; set; }
         public string PackageName { get; set; }
         public string CarName { get; set; }
-        public string WasherName { get; set; }
     }
 }

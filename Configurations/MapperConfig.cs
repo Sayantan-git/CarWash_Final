@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarWashApi.DTOs;
+using CarWashApi.DTOs.UserProfile;
 using CarWashApi.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace CarWashApi.Configurations
         public MapperConfig()
         {
             CreateMap<CreateUserDto, UserProfile>().ReverseMap();
+            CreateMap<UpdateUserDto, UserProfile>().ReverseMap();
+
+            CreateMap<UpdateCarsDto, CarInfo>().ReverseMap();
         }
     }
 }

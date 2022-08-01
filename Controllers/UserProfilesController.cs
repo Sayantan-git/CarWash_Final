@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarWashApi.DTOs;
+using CarWashApi.DTOs.UserProfile;
 using CarWashApi.Models;
 using CarWashApi.Service;
 using Microsoft.AspNetCore.Http;
@@ -96,33 +97,36 @@ namespace CarWashApi.Controllers
         /// <returns></returns>
 
         // PUT: api/UserProfiles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserProfile(int id, UserProfile profile)
+        public async Task<IActionResult> UpdateUserProfile(int id, UpdateUserDto userProfileDto)
         {
             try
             {
-                if (id != profile.UserId)
-                {
-                    return BadRequest();
 
-                }
                 var userProfile = await _Service.GetUserById(id);
                 if (userProfile == null)
                 {
                     return NotFound();
                 }
+
+
+                mapper.Map(userProfileDto, userProfile);
+
+
                 if (_Service == null)
                 {
-                    return Problem("Entity set 'CropDealContext.UserProfiles'  is null.");
+                    return Problem("Entity set 'CarWashContext.UserProfile'  is null.");
                 }
 
-                var val = _Service.UpdateUser(userProfile);
+                var val = await _Service.UpdateUser(userProfile);
                 if (val == null)
                 {
                     return BadRequest();
                 }
                 return NoContent();
+
+
             }
             catch (Exception ex)
             {

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarWashApi.Models
+namespace CarWashApi.DTOs.UserProfile
 {
-    public class Token
+    public class BaseUserDto
     {
-        public string token { get; set; }
-
         public int UserId { get; set; }
 
     }

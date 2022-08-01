@@ -21,8 +21,9 @@ namespace CarWashApi.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
+
+
+        [HttpPost]
         public IActionResult ChangeUserStatus(int id, string UserStatus)
         {
             (from p in _context.UserProfiles
