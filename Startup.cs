@@ -37,20 +37,7 @@ namespace CarWashApi
         
         public void ConfigureServices(IServiceCollection services)
         {
-            //var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins,
-            //        builder =>
-            //        {
-            //            builder.WithOrigins("https://localhost4200",
-            //                "https://localhost3000")
-            //            .AllowCredentials()
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod()
-            //            .WithExposedHeaders();
-            //        });
-            //});
+            
             services.AddCors();
             services.AddCors(options =>
             {
@@ -97,6 +84,7 @@ namespace CarWashApi
 
             services.AddScoped<ILoginRepository<Login, int>, LoginRepository>();
             services.AddScoped<LoginService, LoginService>();
+
 
 
             services.AddScoped<IRegisterRepository<CreateUserDto, UserProfile>, RegisterRepository>();

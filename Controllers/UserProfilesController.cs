@@ -36,13 +36,13 @@ namespace CarWashApi.Controllers
         /// <returns></returns>
         // GET: api/UserProfiles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserProfile>>> GetUserProfiles()
+        public async Task<ActionResult<GetUserDto>> GetUserProfiles()
         {
             try
             {
-
                 var users = await _Service.GetUser();
-                return Ok(users);
+                var usersDto = mapper.Map<IEnumerable<GetUserDto>>(users);
+                return Ok(usersDto);
             }
             catch (Exception ex)
             {
@@ -53,20 +53,12 @@ namespace CarWashApi.Controllers
             {
 
             }
-
-
         }
         #endregion
 
         #region GetUserProfileById
-        /// <summary>
-        /// this action is used to get users by Id
-        /// </summary>
-        /// <returns></returns>
-
-        // GET: api/UserProfiles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserProfile>> GetUserProfile(int id)
+        public async Task<ActionResult<GetUserDto>> GetUserProfile(int id)
         {
             try
             {
@@ -77,7 +69,8 @@ namespace CarWashApi.Controllers
                 {
                     return NotFound();
                 }
-                return userProfile;
+                var userDto = mapper.Map<GetUserDto>(userProfile);
+                return userDto;
             }
             catch (Exception ex)
             {
@@ -91,12 +84,6 @@ namespace CarWashApi.Controllers
         #endregion
 
         #region UpdateUserProfile
-        /// <summary>
-        /// this action is used to update user profile
-        /// </summary>
-        /// <returns></returns>
-
-        // PUT: api/UserProfiles/5
         
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUserProfile(int id, UpdateUserDto userProfileDto)
@@ -120,6 +107,7 @@ namespace CarWashApi.Controllers
                 }
 
                 var val = await _Service.UpdateUser(userProfile);
+
                 if (val == null)
                 {
                     return BadRequest();

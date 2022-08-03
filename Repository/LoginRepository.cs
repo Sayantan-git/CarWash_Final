@@ -59,7 +59,7 @@ namespace CarWashApi.Repository
                     {
 
 
-                        if (user.Role == item.Role && user.UserStatus == "ACTIVE")
+                        if (user.Role == item.Role && user.UserStatus == "Active")
                         {
                             using var hmac = new HMACSHA512(user.UserPasswordSalt);
 

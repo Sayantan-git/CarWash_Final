@@ -57,7 +57,7 @@ namespace CarWashApi.Controllers
 
 
             var car = await _context.Cars.FindAsync(id);
-            if(car == null)
+            if (car == null)
             {
                 return NotFound();
             }

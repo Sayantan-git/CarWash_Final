@@ -1,12 +1,11 @@
-﻿using CarWashApi.DTOs.Car;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarWashApi.DTOs
+namespace CarWashApi.DTOs.Car
 {
-    public class UpdateCarsDto:BaseCarDto
+    public class GetCarDto : BaseCarDto
     {
         public string Name { get; set; }
         public string Model { get; set; }
