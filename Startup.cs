@@ -82,6 +82,9 @@ namespace CarWashApi
             services.AddScoped<IViewWashersRepository, ViewWashersRepository>();
             services.AddScoped<ViewWasherService, ViewWasherService>();
 
+            services.AddScoped<IViewCustomersRepository, ViewCustomersRepository>();
+            services.AddScoped<ViewCustomerService, ViewCustomerService>();
+
             services.AddScoped<ILoginRepository<Login, int>, LoginRepository>();
             services.AddScoped<LoginService, LoginService>();
 

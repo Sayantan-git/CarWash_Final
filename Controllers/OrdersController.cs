@@ -1,12 +1,11 @@
-﻿using CarWashApi.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using CarWashApi.Models;
 
 namespace CarWashApi.Controllers
 {
@@ -22,14 +21,9 @@ namespace CarWashApi.Controllers
         }
 
         // GET: api/Orders
-        [Authorize(Roles = "Washer")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            if (_context.Orders == null)
-            {
-                return NotFound();
-            }
             return await _context.Orders.ToListAsync();
         }
 
@@ -37,10 +31,6 @@ namespace CarWashApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            if (_context.Orders == null)
-            {
-                return NotFound();
-            }
             var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
@@ -51,7 +41,7 @@ namespace CarWashApi.Controllers
             return order;
         }
 
-        // PUT: api/Order/5
+        // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
@@ -85,26 +75,18 @@ namespace CarWashApi.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Admin>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            if (_context.Orders == null)
-            {
-                return Problem("Entity set 'CropDealContext.Orders'  is null.");
-            }
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
-        // DELETE: api/Order/5
+        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            if (_context.Orders == null)
-            {
-                return NotFound();
-            }
             var order = await _context.Orders.FindAsync(id);
             if (order == null)
             {
@@ -119,8 +101,7 @@ namespace CarWashApi.Controllers
 
         private bool OrderExists(int id)
         {
-            return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }
-

@@ -14,30 +14,23 @@ namespace CarWashApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime DateTime { get; set; }
-        public decimal TotalCost { get; set; }
+        public string PkgName { get; set; }
+        public string pkgDescription { get; set; }
+        public double price { get; set; }
+        public string regNumber { get; set; }
+        public string address { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+
+        public string pinCode { get; set; }
+
+        public string instructions { get; set; }
+
+        public string date { get; set; }
+
         public string Status { get; set; }
-        public string IsScheduledLater { get; set; }
-        public string Instructions { get; set; }
-        public string PaymentStatus { get; set; }
 
 
-        public int? CustId { get; set; }
 
-        [ForeignKey("CustId")]
-        public UserProfile UserProfile { get; set; }
-
-        public int? AddressId { get; set; }
-        [ForeignKey("AddressId")]
-        public Address Address { get; set; }
-
-
-        public int? PackageId { get; set; }
-        [ForeignKey("PackageId")]
-        public Package Package { get; set; }
-
-        public int? CarId { get; set; }
-        [ForeignKey("CarId")]
-        public CarInfo CarInfo { get; set; }
     }
 }
