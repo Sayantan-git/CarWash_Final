@@ -14,9 +14,9 @@ namespace CarWashApi.Service
         {
             _repository = repository;
         }
-        public List<Invoice> ViewInvoice(int id)
+        public List<Invoice> ViewInvoice(string email)
         {
-            return _repository.ViewInvoiceAsync(id);
+            return _repository.ViewInvoiceAsync(email);
         }
     }
 }

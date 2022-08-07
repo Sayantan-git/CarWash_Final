@@ -1,4 +1,5 @@
 ﻿using CarWashApi.Models;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,37 +8,37 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Repository
 {
-    public class ViewCustomersRepository : IViewCustomersRepository
+    public class PackageRepository :IPackage
     {
-        CarWashContext _context;
-        public ViewCustomersRepository(CarWashContext context) => _context = context;
 
-
-        #region View Customers
+        #region SendEmail
         /// <summary>
-        /// this method is used to View Customers from User Profiles table
+        /// this method is used to send email for Package adding inimation
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<Customer> ViewCustomersAsync()
+        public async Task<Package> SendEmail(Package package)
         {
             try
             {
-                var query = (from a in _context.UserProfiles
-                             where a.Role == "Customer"
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse("vtu11310@veltech.edu.in"));
+                email.To.Add(MailboxAddress.Parse("sayantanb2000@gmail.com"));
+                email.Subject = "Package Added";
+                email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text = "Hi Admin," + "<br>" +
+                    "New Package has been added succesfully" + "<br>" +
+                    "<pre>                                           Regards, GreenCar Wash.</pre>"
+                };
+                using var smtp = new MailKit.Net.Smtp.SmtpClient();
+                smtp.Connect("smtp.gmail.com", 587, false);
+                smtp.Authenticate("vtu11310@veltech.edu.in", "sayan@artpagla");
+                smtp.Send(email);
+                smtp.Disconnect(true);
+                return package;
 
-                             select new Customer()
-                             {
-                                 UserId = a.UserId,
-                                 UserName = a.UserName,
-                                 UserPhnumber = a.UserPhnumber,
-                                 UserEmail = a.UserEmail,
-                                 UserStatus = a.UserStatus
-                             });
-
-                List<Customer> list1 = query.ToList();
-                return list1;
             }
             catch (Exception ex)
             {
@@ -45,7 +46,7 @@ namespace CarWashApi.Repository
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
                     writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine("Error Caused at ViewCustomers in ViewCustomersRepo");
+                    writer.WriteLine("Error Caused at SendEmail in PackageRepository");
                     writer.WriteLine("Date : " + DateTime.Now.ToString());
                     writer.WriteLine();
 
@@ -58,13 +59,11 @@ namespace CarWashApi.Repository
                         ex = ex.InnerException;
                     }
                 }
-                throw;
             }
-            finally
-            {
 
-            }
+            return package;
         }
         #endregion
+
     }
 }

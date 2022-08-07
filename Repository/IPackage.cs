@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Repository
 {
-    public interface IViewInvoiceRepository
+    public interface IPackage
     {
-        List<Invoice> ViewInvoiceAsync(string email);
+        Task<Package> SendEmail(Package package);
     }
 }

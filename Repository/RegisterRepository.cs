@@ -3,6 +3,7 @@ using CarWashApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,7 +22,6 @@ namespace CarWashApi.Repository
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<ActionResult<UserProfile>> CreateAsync(CreateUserDto userProfileDto)
         {
             try
@@ -52,6 +52,7 @@ namespace CarWashApi.Repository
             {
 
             }
+
 
         }
 

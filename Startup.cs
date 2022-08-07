@@ -88,6 +88,12 @@ namespace CarWashApi
             services.AddScoped<ILoginRepository<Login, int>, LoginRepository>();
             services.AddScoped<LoginService, LoginService>();
 
+            services.AddScoped<IPackage, PackageRepository>();
+            services.AddScoped<PackageService, PackageService>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<OrderService, OrderService>();
+
 
 
             services.AddScoped<IRegisterRepository<CreateUserDto, UserProfile>, RegisterRepository>();

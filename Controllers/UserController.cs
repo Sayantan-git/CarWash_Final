@@ -22,7 +22,7 @@ namespace CarWashApi.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult ChangeUserStatus(int id, string UserStatus)
         {

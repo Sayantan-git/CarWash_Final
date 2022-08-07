@@ -30,6 +30,8 @@ namespace CarWashApi.Models
 
         public string Status { get; set; }
 
+        public string userEmail { get; set; }
+
 
 
     }

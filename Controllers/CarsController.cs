@@ -46,7 +46,7 @@ namespace CarWashApi.Controllers
         }
 
         // PUT: api/Cars/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCarInfo(int id, UpdateCarsDto carDto)
         {
@@ -86,7 +86,7 @@ namespace CarWashApi.Controllers
         }
 
         // POST: api/Cars
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPost]
         public async Task<ActionResult<CarInfo>> PostCarInfo(CarInfo carInfo)
         {

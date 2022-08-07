@@ -1,4 +1,5 @@
 ﻿using CarWashApi.Models;
+using CarWashApi.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace CarWashApi.Controllers
     public class PackagesController : ControllerBase
     {
         private readonly CarWashContext _context;
+        private PackageService packageService;
 
-        public PackagesController(CarWashContext context)
+        public PackagesController(CarWashContext context, PackageService _packageService)
         {
             _context = context;
+            packageService = _packageService;
         }
 
         // GET: api/Packages
@@ -53,8 +56,7 @@ namespace CarWashApi.Controllers
         }
 
         // PUT: api/Packages/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPackage(int id, Package package)
         {
@@ -85,23 +87,24 @@ namespace CarWashApi.Controllers
         }
 
         // POST: api/Admins
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Package>> PostPackage(Package package)
         {
             if (_context.Packages == null)
             {
-                return Problem("Entity set 'CarWashContext.Admins'  is null.");
+                return Problem("Entity set 'CarWashContext.Packages'  is null.");
             }
             _context.Packages.Add(package);
             await _context.SaveChangesAsync();
 
+
+            //packageService.SendEmail(package);
             return CreatedAtAction("GetPackage", new { id = package.Id }, package);
         }
 
         // DELETE: api/Packages/5
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePackage(int id)
         {

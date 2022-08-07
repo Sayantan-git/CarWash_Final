@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarWashApi.Models;
+using CarWashApi.Service;
 
 namespace CarWashApi.Controllers
 {
@@ -14,10 +15,12 @@ namespace CarWashApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly CarWashContext _context;
+        private OrderService orderService;
 
-        public OrdersController(CarWashContext context)
+        public OrdersController(CarWashContext context, OrderService _order)
         {
             _context = context;
+            orderService = _order;
         }
 
         // GET: api/Orders
@@ -78,8 +81,12 @@ namespace CarWashApi.Controllers
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             _context.Orders.Add(order);
+            orderService.SendEmail(order);
             await _context.SaveChangesAsync();
 
+
+
+            
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 

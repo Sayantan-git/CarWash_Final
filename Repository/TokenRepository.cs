@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace CarWashApi.Repository
 {
@@ -21,6 +22,14 @@ namespace CarWashApi.Repository
             _configuration = config;
         }
 
+
+        #region CreateToken
+        /// <summary>
+        /// this method is used to create Token
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public string CreateToken(Login login)
         {
             try
@@ -49,6 +58,23 @@ namespace CarWashApi.Repository
             }
             catch (Exception ex)
             {
+                string filePath = @"E:\Error.txt";
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Error Caused at CreateToken in TokenRepo");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                }
                 throw;
             }
             finally
@@ -56,6 +82,7 @@ namespace CarWashApi.Repository
 
             }
         }
+        #endregion
     }
 }
 

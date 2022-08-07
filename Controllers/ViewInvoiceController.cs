@@ -21,9 +21,9 @@ namespace CarWashApi.Controllers
         }
 
         [HttpGet]
-        public List<Invoice> ViewInvoice(int id)
+        public List<Invoice> ViewInvoice(string email)
         {
-            return _Service.ViewInvoice(id);
+            return _Service.ViewInvoice(email);
         }
     }
 }

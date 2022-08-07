@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Repository
 {
-    public interface IOrderRepository<TEntity> where TEntity : class
+    public interface IOrderRepository
     {
-        Task<ActionResult<Order>> CreateAsync(TEntity item);
+        //Task<ActionResult<Order>> CreateAsync(TEntity item);
+
+        Task<Order> SendEmail(Order order);
+
+
     }
 }

@@ -42,7 +42,7 @@ namespace CarWashApi.Controllers
         }
 
         // PUT: api/Addresses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAddress(int id, Address address)
         {
@@ -73,7 +73,6 @@ namespace CarWashApi.Controllers
         }
 
         // POST: api/Addresses
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Address>> PostAddress(Address address)
         {

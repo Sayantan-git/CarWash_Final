@@ -3,6 +3,7 @@ using CarWashApi.DTOs;
 using CarWashApi.DTOs.UserProfile;
 using CarWashApi.Models;
 using CarWashApi.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -172,6 +173,7 @@ namespace CarWashApi.Controllers
         /// <returns></returns>
 
         // DELETE: api/UserProfiles/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserProfile(int id)
         {

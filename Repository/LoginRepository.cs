@@ -94,8 +94,6 @@ namespace CarWashApi.Repository
         }
         #endregion
 
-
-
         #region getuserId
         /// <summary>
         /// this method gets user id of the user

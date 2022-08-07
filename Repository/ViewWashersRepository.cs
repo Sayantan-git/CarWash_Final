@@ -11,6 +11,15 @@ namespace CarWashApi.Repository
         CarWashContext _context;
         public ViewWashersRepository(CarWashContext context) => _context = context;
 
+
+
+        #region View Washers
+        /// <summary>
+        /// this method is used to View Washers from User Profiles table
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public List<Washer> ViewWashersAsync()
         {
             try
@@ -39,6 +48,7 @@ namespace CarWashApi.Repository
 
             }
         }
+        #endregion
 
     }
 }
