@@ -66,10 +66,12 @@ namespace CarWashApi
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
+
+
             services.AddDbContext<CarWashContext>
                (x => x.UseSqlServer(Configuration.GetConnectionString("Constr")));
 
-
+            //addScoped - service type, when we call http request it creates new instance 
 
             services.AddScoped<IRepository<UserProfile, int>, UserProfileRepository>();
             services.AddScoped<UserProfileService, UserProfileService>();
@@ -119,8 +121,6 @@ namespace CarWashApi
         };
     });
 
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -141,11 +141,6 @@ namespace CarWashApi
                 .SetIsOriginAllowed(origin => true) // allow any origin
                 .AllowCredentials()); // allow credentials
 
-            //app.UseCors(x=>x
-            //.AllowAnyHeader()
-            //.AllowAnyMethod()
-            //.AllowCredentials()
-            //);
 
             app.UseHttpsRedirection();
 

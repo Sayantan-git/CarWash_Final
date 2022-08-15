@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace CarWashApi.Repository
 {
-    public class UserProfileRepository : IRepository<UserProfile, int>
+    public class UserProfileRepository : IRepository<UserProfile, int>  
     {
         CarWashContext _context;
-        public UserProfileRepository(CarWashContext context) => _context = context;
+        public UserProfileRepository(CarWashContext context) => _context = context;  ///Constructor Injection
 
 
         #region CreateUser
@@ -23,8 +23,7 @@ namespace CarWashApi.Repository
         /// <exception cref="NotImplementedException"></exception>
         public async Task<int> CreateAsync(UserProfile userProfile)
         {
-
-            _context.UserProfiles.Add(userProfile);
+            _context.UserProfiles.Add(userProfile);   //i will add the user profile in db which i am getting from user 
             await _context.SaveChangesAsync();
             var response = StatusCodes.Status201Created;
             return response;
@@ -94,6 +93,8 @@ namespace CarWashApi.Repository
         }
         #endregion
 
+
+        //Ienumerable - base interface for all non-generic collections that can be enumerated
         public async Task<IEnumerable<UserProfile>> GetAsync()
         {
             return await _context.UserProfiles.AsNoTracking().ToListAsync();

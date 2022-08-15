@@ -18,6 +18,11 @@ namespace CarWashApi.Models
         }
 
 
+        //used to create tables as per the models we referred
+        //used to query and save instance of the model
+
+        //get, set - retrieve and set variable value
+        //virtual - basic functionality is same but we need more functionality in derived class
         public virtual DbSet<UserProfile> UserProfiles { get; set; } = null!;
         public virtual DbSet<Admin> Admins { get; set; } = null!;
 

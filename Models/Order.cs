@@ -34,5 +34,6 @@ namespace CarWashApi.Models
 
 
 
+
     }
 }

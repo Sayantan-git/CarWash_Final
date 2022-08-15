@@ -57,6 +57,7 @@ namespace CarWashApi.Controllers
         }
         #endregion
 
+
         #region GetUserProfileById
         [HttpGet("{id}")]
         public async Task<ActionResult<GetUserDto>> GetUserProfile(int id)

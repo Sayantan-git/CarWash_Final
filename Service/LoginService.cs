@@ -24,5 +24,10 @@ namespace CarWashApi.Service
         {
             return await _repository.GetUserId(userid);
         }
+
+        public async Task<string> GetUserName(string email)
+        {
+            return await _repository.GetUserName(email);
+        }
     }
 }

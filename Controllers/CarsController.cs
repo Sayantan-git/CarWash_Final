@@ -18,7 +18,7 @@ namespace CarWashApi.Controllers
         private readonly CarWashContext _context;
         private readonly IMapper mapper;
 
-        public CarsController(CarWashContext context, IMapper mapper)
+        public CarsController(CarWashContext context, IMapper mapper)  //Constructor (DI) injection
         {
             _context = context;
             this.mapper = mapper;

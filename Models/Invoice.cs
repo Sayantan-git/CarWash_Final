@@ -13,6 +13,8 @@ namespace CarWashApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InvoiceId { get; set; }
 
+        public string WasherName { get; set; }
+
         public string PkgName { get; set; }
         public string pkgDescription { get; set; }
         public double price { get; set; }

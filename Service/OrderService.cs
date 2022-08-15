@@ -14,6 +14,8 @@ namespace CarWashApi.Service
         {
             _IOrder = _order;
         }
+
+
         public async Task<Order> SendEmail(Order order)
         {
             return await _IOrder.SendEmail(order);

@@ -30,7 +30,7 @@ namespace CarWashApi.Repository
                 
 
 
-                email.From.Add(MailboxAddress.Parse("vtu11310@veltech.edu.in")); //sender email
+                email.From.Add(MailboxAddress.Parse("greencarwash846@gmail.com")); //sender email
                 email.To.Add(MailboxAddress.Parse(toEmail));
                 email.Subject = "Order Placed";
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -47,7 +47,7 @@ namespace CarWashApi.Repository
                 };
                 using var smtp = new MailKit.Net.Smtp.SmtpClient();
                 smtp.Connect("smtp.gmail.com", 587, false);
-                smtp.Authenticate("vtu11310@veltech.edu.in", "sayan@artpagla");
+                smtp.Authenticate("greencarwash846@gmail.com", "ajbuonwsvwnwulew");
                 smtp.Send(email);
                 smtp.Disconnect(true);
                 return order;

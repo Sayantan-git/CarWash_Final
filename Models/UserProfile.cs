@@ -11,7 +11,7 @@ namespace CarWashApi.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+       public int UserId { get; set; }
         public string UserName { get; set; } = null!;
         public string UserPhnumber { get; set; } = null!;
         public string UserEmail { get; set; } = null!;

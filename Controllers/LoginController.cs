@@ -31,7 +31,7 @@ namespace CarWashApi.Controllers
 
             var res = await _Service.Login(item);
             int res1 = await _Service.GetUserId(item.Email);
-
+            string res2 = await _Service.GetUserName(item.Email);
 
             if (res == 200)
             {
@@ -41,6 +41,7 @@ namespace CarWashApi.Controllers
                 Token tk = new Token();
                 tk.token = token;
                 tk.UserId = res1;
+                tk.UserName = res2;
                 return tk;
 
 

@@ -10,5 +10,6 @@ namespace CarWashApi.Repository
         Task<int> Login(TEntity item);
         Task<int> GetUserId(string item);
 
+        Task<string> GetUserName(string item);
     }
 }
